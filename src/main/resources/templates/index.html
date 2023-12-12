@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pivot Chart</title>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Add custom styles for adjusting chart size and position */
+        #chart-container {
+            width: 75%; /* Adjust the chart width */
+            float: right; /* Position the chart to the right */
+            margin-right: 20px; /* Add some margin for better spacing */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Adjusted chart container -->
+    <div id="chart-container">
+        <canvas id="pivotChart"></canvas>
+    </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        // Get data from Thymeleaf model
+        var categories = /*[[${categories}]]*/ [];
+        var values = /*[[${values}]]*/ [];
+
+        // Create data for the chart
+        var data = {
+            labels: categories,
+            datasets: [{
+                label: 'Values',
+                data: values,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        // Chart configuration
+        var config = {
+            type: 'bar', // You can use 'bar', 'line', 'pie', etc.
+            data: data,
+            options: {
+                scales: {
+                    x: {
+                        type: 'category',
+                        title: {
+                            display: true,
+                            text: 'Categories'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Values'
+                        }
+                    }
+                }
+            }
+        };
+
+        // Get chart canvas element
+        var ctx = document.getElementById('pivotChart').getContext('2d');
+
+        // Create and render the chart
+        var myChart = new Chart(ctx, config);
+
+        /*]]>*/
+    </script>
+
+</body>
+</html>
